@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Query } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AirportService } from './airports.service';
 
@@ -11,7 +11,7 @@ export class AirportController {
 
   @ApiOperation({ summary: 'Get All Airport' })
   @ApiResponse({ status: 201, type: [Airport] })
-  @Post('/')
+  @Get('')
   getAll(): Airport[] {
     return this.airportService.getAll();
   }
@@ -25,7 +25,7 @@ export class AirportController {
     example: 'Amste',
   })
   @Get('search')
-  searchCity(@Query() params: { q: string }): Airport[] {
+  getAllBySearch(@Query() params: { q: string }): Airport[] {
     return this.airportService.getAllBySearch(params.q);
   }
 }
