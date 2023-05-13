@@ -11,7 +11,6 @@ import { Seats } from './models/seats.model';
 import { Airport } from '../airports/models/airport.model';
 
 import * as airports from '../mock/airports.json';
-import * as airportsMain from '../mock/airports-main.json';
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
@@ -83,7 +82,6 @@ export class FlightsService {
     flight.to = to;
     flight.takeoffDate = takeoffDate;
     flight.landingDate = landingDate;
-    // flight.prices = new PriceList();
 
     flight.price = approximatePrice
       ? new Price(
@@ -93,19 +91,6 @@ export class FlightsService {
           ),
         )
       : new Price(getRandomInt(40, 900));
-
-    // const takeoffDateMs = new Date(date).getTime();
-    // const currentDateMs = new Date().getTime();
-
-    // if (takeoffDateMs - currentDateMs < 0) {
-    //   flight.prices['-1'] = undefined;
-    // }
-
-    // if (takeoffDateMs - currentDateMs - 24 * 60 * 60 * 1000 < 0) {
-    //   flight.prices['-2'] = undefined;
-    // }
-
-    // flight.price = flight.prices[0];
 
     return flight;
   }
@@ -121,23 +106,6 @@ export class FlightsService {
     ).toJSON();
 
     return [takeoffDate, landingDate];
-  }
-
-  searchCity(name?: string): Airport[] {
-    if (!name) {
-      return airportsMain;
-    }
-
-    const nameToLC = name.toLowerCase();
-    return airports
-      .filter(
-        (airport) =>
-          airport.city.toLocaleLowerCase().includes(nameToLC) ||
-          airport.country.toLocaleLowerCase().includes(nameToLC) ||
-          airport.key.toLocaleLowerCase().includes(nameToLC) ||
-          airport.name.toLocaleLowerCase().includes(nameToLC),
-      )
-      .slice(0, 10);
   }
 
   generateOtherFlights(
