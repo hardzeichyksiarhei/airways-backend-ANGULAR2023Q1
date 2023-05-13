@@ -1,36 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { Flight } from './models/flight.model';
 import { SearchFlights } from './models/search.model';
-import { Airport } from './models/airport.model';
-import * as airports from '../mock/airports.json';
-import * as airportsMain from '../mock/airports-main.json';
-import { getRandomInt } from 'src/helper/get-random-int';
-import { getRandomChars } from 'src/helper/get-random-chars';
+
+import { getRandomInt } from '../helper/get-random-int';
+import { getRandomChars } from '../helper/get-random-chars';
+
 import { Price } from './models/price.model';
 import { Flights } from './models/flights.model';
 import { Seats } from './models/seats.model';
+import { Airport } from '../airports/models/airport.model';
+
+import * as airports from '../mock/airports.json';
+import * as airportsMain from '../mock/airports-main.json';
 
 export const DAY_IN_MS = 1000 * 60 * 60 * 24;
 
 @Injectable()
 export class FlightsService {
-  searchFlight(searchFlights: SearchFlights) {
+  searchFlight(search: SearchFlights) {
     const flights: Flight[] = [];
     const timeMins = getRandomInt(40, 420);
 
     const forwardFlight = this.generateFlight(
-      searchFlights.fromKey,
-      searchFlights.toKey,
-      searchFlights.forwardDate,
+      search.fromKey,
+      search.toKey,
+      search.forwardDate,
       timeMins,
     );
     flights.push(forwardFlight);
 
-    if (searchFlights.backDate) {
+    if (search.backDate) {
       const backFlight = this.generateFlight(
-        searchFlights.toKey,
-        searchFlights.fromKey,
-        searchFlights.backDate,
+        search.toKey,
+        search.fromKey,
+        search.backDate,
         timeMins,
       );
       flights.push(backFlight);
@@ -39,10 +42,10 @@ export class FlightsService {
     flights[0].otherFlights = this.generateOtherFlights(
       flights[0],
       new Date(),
-      searchFlights.backDate
+      search.backDate
         ? new Date(flights[1].takeoffDate)
         : new Date('May 02 2053'),
-      new Date(searchFlights.forwardDate),
+      new Date(search.forwardDate),
       timeMins,
     );
 
@@ -51,7 +54,7 @@ export class FlightsService {
         flights[1],
         new Date(flights[0].takeoffDate),
         new Date('May 02 2053'),
-        new Date(searchFlights.backDate),
+        new Date(search.backDate),
         timeMins,
       );
     }

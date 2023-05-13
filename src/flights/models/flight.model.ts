@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Airport } from './airport.model';
+
+import { Airport } from '../../airports/models/airport.model';
 import { Flights } from './flights.model';
 import { Price } from './price.model';
 import { Seats } from './seats.model';
