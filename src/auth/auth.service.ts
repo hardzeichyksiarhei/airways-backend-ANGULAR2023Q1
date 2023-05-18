@@ -4,7 +4,7 @@ import { User } from './user.entity';
 import { RegistrationRequest } from './model/registration-request.model';
 import { Repository } from 'typeorm';
 import { LoginRequest } from './model/login-request';
-import { hash, compare } from 'bcrypt';
+import { hash, compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
 import { TokenRes } from './model/token-res';
 import { UserRes } from './model/user-res';
