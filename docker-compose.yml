@@ -13,6 +13,8 @@ services:
     depends_on:
       - postgres
     restart: always
+    networks:
+      - web_network
   postgres:
     image: postgres
     env_file:
@@ -22,6 +24,23 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: always
+    networks:
+      - web_network
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    networks:
+      - web_network
+    ports:
+      - 5050:5050
+    links:
+      - nestjs
+
+networks:
+  web_network:
+    driver: bridge
 
 volumes:
   pgdata:
