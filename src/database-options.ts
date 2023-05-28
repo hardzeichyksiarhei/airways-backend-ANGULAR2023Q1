@@ -17,7 +17,7 @@ const databaseOptions = () => {
     autoLoadEntities: true,
     dialectOptions: {
       ssl: {
-        // require: true,
+        require: true,
         rejectUnauthorized: false,
       },
     },
