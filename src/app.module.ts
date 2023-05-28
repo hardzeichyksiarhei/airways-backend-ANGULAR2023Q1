@@ -10,7 +10,7 @@ import { AirportModule } from './airports/airports.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: './.env' }),
+    ConfigModule.forRoot({ envFilePath: '.env' }),
     TypeOrmModule.forRoot(databaseOptions()),
     AuthModule,
     AirportModule,

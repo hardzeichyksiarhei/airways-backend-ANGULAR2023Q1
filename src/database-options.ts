@@ -15,6 +15,12 @@ const databaseOptions = () => {
     subscribers: [],
     migrations: [],
     autoLoadEntities: true,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
   } as TypeOrmModuleOptions;
 };
 
